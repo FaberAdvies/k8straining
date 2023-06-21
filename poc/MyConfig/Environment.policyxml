@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policies>
+  <policy policyType="UserDefined" policyName="Environment" policyTemplate="UserDefined">
+    <name>JJ</name>
+    <version>2.3</version>
+  </policy>
+</policies>

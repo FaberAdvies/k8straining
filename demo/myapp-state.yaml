@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myappsvc
+  labels:
+    app: myappsvc
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+     app: myapp
+     tier: frontend
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: myapp-state
+  labels:
+    app: myapp
+    tier: frontend
+spec:
+  replicas: 3
+  serviceName: myappsvc
+  selector:
+    matchLabels:
+      tier: frontend
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+        tier: frontend
+      name: myapp-pod
+    spec:
+      containers:
+      - image: nginx:1.25
+        name: nginx-container

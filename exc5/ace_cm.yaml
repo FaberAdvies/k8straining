@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: ace
+  name: ace
+spec:
+  containers:
+  - image: de.icr.io/k8sworkshop/ace-cont:1.1
+    name: ace
+    env:
+    - name: MY_ENV_VARIABLE
+      valueFrom:
+        configMapKeyRef:
+          name: envvariable-cm   
+          key: MY_ENV_VARIABLE # The key to fetch.
+    volumeMounts:
+      - name: config
+        mountPath: "/home/aceuser/ace-server/overrides/MyConfig"
+  volumes:
+  - name: config
+    configMap:
+      name: myconfig-cm
+      items:
+      - key: "Environment.policyxml"
+        path: "Environment.policyxml"
+      - key: "policy.descriptor"
+        path: "policy.descriptor"
+      

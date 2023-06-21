@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: acedeployment
+  name: acedeployment
+spec:
+  replicas: 6
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: acedeployment
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: acedeployment
+    spec:
+      containers:
+      - image: de.icr.io/k8sworkshop/ace-cont:2.1
+        imagePullPolicy: IfNotPresent
+        name: ace-cont
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        env:
+        - name: MY_ENV_VARIABLE
+          valueFrom:
+            configMapKeyRef:
+              name: envvariable-cm   
+              key: MY_ENV_VARIABLE
+        volumeMounts:
+          - name: config
+            mountPath: "/home/aceuser/ace-server/overrides/MyConfig"
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: config
+        configMap:
+          name: myconfig-cm
+          items:
+          - key: "Environment.policyxml"
+            path: "Environment.policyxml"
+          - key: "policy.descriptor"
+            path: "policy.descriptor"

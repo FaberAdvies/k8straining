@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: acedeployment
+  name: acedeployment
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: acedeployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: acedeployment
+    spec:
+      containers:
+      - image: de.icr.io/k8sworkshop/ace-cont:1.1
+        name: ace-cont
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: acedeployment
+  name: acedeployment
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 7800
+  selector:
+    app: acedeployment
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
