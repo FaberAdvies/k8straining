@@ -6,7 +6,7 @@ metadata:
     app: dnsutils
 spec:
   containers:
-  - image: de.icr.io/k8sworkshop/dnsutil:1.0
+  - image: de.icr.io/k8straining/dnsutils:latest
     command:
       - "sleep"
       - "604800"

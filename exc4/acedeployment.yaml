@@ -18,7 +18,7 @@ spec:
         app: acedeployment
     spec:
       containers:
-      - image: de.icr.io/k8sworkshop/ace-cont:1.1
+      - image: de.icr.io/k8straining/ace-cont:1.1
         name: ace-cont
         resources: {}
 status: {}

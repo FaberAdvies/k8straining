@@ -1,6 +1,6 @@
-FROM de.icr.io/k8sworkshop/ace:latest
+ARG  FROMIMAGE=ace:12.0.9.0
+FROM ${FROMIMAGE}
 ENV LICENSE=accept
-
 USER root
 
 # Copy the BAR files into /tmp and process them:
